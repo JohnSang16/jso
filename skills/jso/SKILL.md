@@ -23,9 +23,9 @@ not do (unlike Claude Code's native Agent Teams, which spawns without asking).
 ## Spawning (on approval)
 
 1. Check `~/.jso/home-terminal-id` exists. If not, tell the user to run
-   `scripts/register-home.sh` from the pane they're working in, then stop and
+   `register-home.sh` from the pane they're working in, then stop and
    wait, don't guess which pane is home.
-2. Run `scripts/spawn-worktree.sh <branch-name>` from inside the target repo.
+2. Run `spawn-worktree.sh <branch-name>` from inside the target repo.
    This creates the worktree + branch and opens Claude Code in a new Ghostty
    split.
 3. Tell the user the branch name and worktree path so they can find it later.
@@ -55,7 +55,7 @@ finished:
 Trigger this when the user says the parallel task is finished, or asks to
 review it.
 
-1. Run `scripts/diff-worktree.sh <branch> [base]` (base defaults to `main`).
+1. Run `diff-worktree.sh <branch> [base]` (base defaults to `main`).
 2. Default to **high-level**: read the diff yourself and write a short bullet
    summary of what changed, plus a one-line risk assessment (low/medium/high,
    and why). Don't paste the raw diff at this level.
@@ -68,7 +68,7 @@ review it.
    section verbatim. If they type `3`, show only the stat line plus a
    high-impact flag if one applies, nothing else. Re-show the footer every
    time.
-5. On `m`, run `scripts/merge-worktree.sh <branch> [base]`.
+5. On `m`, run `merge-worktree.sh <branch> [base]`.
    - If it succeeds, confirm the merge commit and that the worktree was
      cleaned up.
    - If it reports a conflict, it already aborted cleanly and left the

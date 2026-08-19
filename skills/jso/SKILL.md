@@ -81,12 +81,69 @@ review it.
    `git -C <repo-root> worktree remove <worktree-path> --force && git -C <repo-root> branch -D <branch>`.
    Confirm before running this, discard is destructive.
 
-## PR drafting (pending design confirmation)
+## PR drafting
 
-Auto-fold-in of `/pr-writer` (or a repo-convention fallback for when it isn't
-installed) is scoped but not yet wired up, John's confirming the fallback
-design first. See `personal/personal-projects/jso.md` in the vault for the
-open question. Don't build this section until that's resolved.
+Trigger after tests pass (see above), once the user wants a PR rather than
+just a local merge.
+
+**Check your own available agent types first.** If `pr-writer` is one of
+them, invoke it via the Agent tool and use its draft, that's a personalized
+agent tuned on real PR history and it should always win when present. If it's
+not available, draft it yourself using the generic rubric below.
+
+Either way, **drafting the text is not gated**, it's read-only. **Actually
+pushing the branch and opening the PR is gated**, always ask first.
+
+### Generic rubric (used only when `pr-writer` isn't available)
+
+1. **Pick a register from the diff size.** `git diff --stat <base>...HEAD`.
+   Small, single-cause fix (roughly under ~80 lines, 1-2 files): terse
+   register, no headers or checkboxes, plain paragraphs, what broke → the
+   actual mechanism (not "fixed the bug") → how it was tested. Substantial
+   diff (many files, a real feature/fix/refactor): structured register below.
+
+2. **Structured register skeleton:**
+   ```
+   ## Summary
+   ## Description
+   - one bullet per distinct change, ordered by importance, not chronology
+   - an unrelated drive-by fix gets its own labeled bullet, never buried
+
+   ## Test plan
+   - [x] checkbox per thing verified, cite the actual command/output
+   - [ ] leave unchecked and visible anything not yet verified, never omit it
+
+   ## Notes / Blockers  (only if something real blocks ship)
+   ```
+   Before applying this, check the target repo's actual PR template and its
+   2-3 most recent merged PR bodies (`gh pr list --repo <owner/repo> --state
+   merged --limit 3 --json body`). Match what that repo actually does, don't
+   force one shape onto every repo.
+
+3. **Voice, non-negotiable regardless of register:**
+   - Root cause, never symptom, name the actual mechanism.
+   - Numbers over adjectives ("182/182 passing", not "most tests pass").
+   - Name what's *not* done, explicitly, never hide a gap by omitting it.
+   - Declarative, not first-person ("Removes the old guard...", not "I
+     removed...").
+   - If an alternative was tried and rejected, say so with real numbers, not
+     vibes.
+   - Cite the source of truth when a choice mirrors an external doc or spec.
+   - No em dashes, no dashes in prose, no emoji.
+
+4. **Title**: match the target repo's own recent convention (Conventional
+   Commits, a ticket-ID scope, plain imperative English, whatever its actual
+   history shows), don't force one style everywhere.
+
+5. **The gate, don't skip it for a substantial diff.** There's no reliable
+   way to detect from git/GitHub history alone whether `/lazysenior` or
+   `/scope` already ran. Ask directly: "did this go through /lazysenior or
+   /scope before now?" If no, say so and suggest running it before
+   finalizing, don't draft around the gap silently.
+
+Once drafted, show the diff via the same tiered view as the diff-review
+section above if the user hasn't already seen it, then wait for an explicit
+yes before pushing the branch and opening the PR.
 
 ## Self-healing debug agent
 

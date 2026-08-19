@@ -7,7 +7,7 @@ one, runs a gated test/debug loop, and shows a tiered diff review
 (high-level / in-depth / minimal) with merge/edit/discard when the work is
 done.
 
-## how it works, end to end
+## architecture
 
 ```mermaid
 flowchart TD

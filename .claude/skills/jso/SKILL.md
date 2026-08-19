@@ -1,6 +1,6 @@
 ---
 name: jso
-description: Terminal-native orchestrator for parallel Claude Code work. Notices when a task deserves its own git worktree and Ghostty split, asks permission first, and runs a tiered diff review (high-level/in-depth/minimal) with merge/edit/discard when the work is done.
+description: Terminal-native orchestrator for parallel Claude Code work. Notices when a task deserves its own git worktree and Ghostty split, asks permission first, runs a detect-and-test pass with a gated debug subagent on failure, then a tiered diff review (high-level/in-depth/minimal) with merge/edit/discard when the work is done.
 ---
 
 # JSO (John Sang's Orchestrator)
@@ -30,6 +30,26 @@ not do (unlike Claude Code's native Agent Teams, which spawns without asking).
    split.
 3. Tell the user the branch name and worktree path so they can find it later.
 
+## Before signaling done: test
+
+Whichever Claude Code instance is doing the actual work (the worktree
+instance, or you if you're working solo) does this before saying the task is
+finished:
+
+1. **Detect, don't assume.** Check the repo for existing test tooling:
+   `package.json` scripts, `pytest.ini`/`pyproject.toml`, `playwright.config`,
+   a Makefile test target, CI workflow test steps. Run whatever's relevant to
+   the actual change. No gate here, it's read-only and it's just checking
+   your own work.
+2. **If there's a real coverage gap** (the change touches something nothing
+   above actually exercises), propose a specific new test, name the type
+   (unit/integration/e2e/property, whichever actually fits, don't default to
+   one framework), and wait for a yes before writing new test infrastructure.
+3. **On failure**, don't just try to fix it inline and don't loop silently.
+   Ask the user before invoking the `jso-debugger` subagent. On yes, hand it
+   the failing output and the diff. It fixes minimally, re-runs tests, and
+   reports back, then control returns to you.
+
 ## Diff review (when the worktree's work is done)
 
 Trigger this when the user says the parallel task is finished, or asks to
@@ -48,16 +68,28 @@ review it.
    section verbatim. If they type `3`, show only the stat line plus a
    high-impact flag if one applies, nothing else. Re-show the footer every
    time.
-5. On `m`, run `scripts/merge-worktree.sh <branch> [base]`. Confirm the merge
-   commit and that the worktree was cleaned up.
+5. On `m`, run `scripts/merge-worktree.sh <branch> [base]`.
+   - If it succeeds, confirm the merge commit and that the worktree was
+     cleaned up.
+   - If it reports a conflict, it already aborted cleanly and left the
+     worktree/branch intact, don't try to auto-resolve. Tell the user there's
+     a conflict and ask how they want to proceed (resolve manually in the
+     worktree, discard, or come back to it later).
 6. On `e`, tell the user the worktree path so they can edit it directly (in
    the split pane or their editor), don't take further action yourself.
 7. On `d`, discard: run
    `git -C <repo-root> worktree remove <worktree-path> --force && git -C <repo-root> branch -D <branch>`.
    Confirm before running this, discard is destructive.
 
-## Everything else
+## PR drafting (pending design confirmation)
 
-Test-gate automation, `/pr-writer` fold-in, and a self-healing debug agent are
-explicitly out of scope for this version, see the scope doc. Don't build
-toward them here even if a task seems to invite it.
+Auto-fold-in of `/pr-writer` (or a repo-convention fallback for when it isn't
+installed) is scoped but not yet wired up, John's confirming the fallback
+design first. See `personal/personal-projects/jso.md` in the vault for the
+open question. Don't build this section until that's resolved.
+
+## Self-healing debug agent
+
+Defined at `jso-debugger` (see the debug-agent gate above). Never invoke it
+without asking first, and never let it commit, merge, push, or open a PR,
+that stays with you and the human review gate.

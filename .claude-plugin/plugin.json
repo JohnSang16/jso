@@ -1,5 +1,5 @@
 {
   "name": "jso",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "Terminal-native orchestrator for parallel Claude Code work: worktree + Ghostty split on approval, gated test/debug loop, tiered diff review."
 }

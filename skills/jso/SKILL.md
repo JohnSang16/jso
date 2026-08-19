@@ -132,20 +132,21 @@ review it.
 Trigger after tests pass (see above), once the user wants a PR rather than
 just a local merge.
 
-**Check your own available agent types first.** If `pr-writer` is one of
-them, invoke it via the Agent tool and use its draft, that's a personalized
-agent tuned on real PR history and it should always win when present. If
-it's not available, see below for what to use instead.
+**Default: draft it yourself using `pr-templates.md`** (same directory as
+this file), read it now, it has multiple real templates by the actual shape
+of the change, not one generic form, and covers picking a base shape,
+layering the target repo's own ceremony, handling a change that's more than
+one type at once, voice, and title convention. Don't inline all of that
+here, it's only needed once a PR is actually being drafted.
+
+**If you have your own personalized PR-drafting agent installed and prefer
+it over the bundled templates**, check your own available agent types for
+it and use that instead, same gating either way. This project doesn't name
+or assume any specific personal agent, that's a per-user preference, set it
+in your own global config if you want one to always win here.
 
 Either way, **drafting the text is not gated**, it's read-only. **Actually
 pushing the branch and opening the PR is gated**, always ask first.
-
-**If `pr-writer` isn't available**, read `pr-templates.md` (same directory
-as this file) now, it has multiple real templates by the actual shape of
-the change, not one generic form, and covers picking a base shape, layering
-the target repo's own ceremony, handling a change that's more than one type
-at once, voice, and title convention. Don't inline all of that here, it's
-only needed once a PR is actually being drafted.
 
 **The gate, don't skip it for a substantial diff, regardless of which
 drafter is used.** There's no reliable way to detect from git/GitHub

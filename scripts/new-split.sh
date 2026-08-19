@@ -22,10 +22,12 @@ if [ ! -f "$ID_FILE" ]; then
 fi
 HOME_ID=$(cat "$ID_FILE")
 
-# command execs directly (no shell), so a multi-statement string breaks it.
-# Point it at a real launcher script instead.
-LAUNCHER=$(mktemp "${TMPDIR:-/tmp}/jso-launch.XXXXXX.sh")
-printf '#!/bin/sh\nexec claude\n' > "$LAUNCHER"
+# command execs directly (no shell, no rc files), so a multi-statement string
+# breaks it and a bare "claude" won't be on PATH. Point it at a real launcher
+# script with claude's absolute path baked in.
+CLAUDE_BIN=$(command -v claude)
+LAUNCHER=$(mktemp "${TMPDIR:-/tmp}/jso-launch.XXXXXX")
+printf '#!/bin/sh\nexec "%s"\n' "$CLAUDE_BIN" > "$LAUNCHER"
 chmod +x "$LAUNCHER"
 
 osascript <<APPLESCRIPT

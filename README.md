@@ -75,7 +75,7 @@ claude plugin update jso@jso-marketplace
   cause first, minimal diff, re-runs tests, reports back. never
   commits/merges/pushes, and only runs after an explicit yes.
 
-**optional external dependency**
+**external dependency**
 - [`ponytail`](https://github.com/DietrichGebert/ponytail) - a public
   plugin the orchestrator checks for before building. if installed, it
   enforces the lazy-build discipline (shortest correct diff, reuse before

@@ -54,6 +54,12 @@ not do (unlike Claude Code's native Agent Teams, which spawns without asking).
 Applies to a small task in the current session, or a big task once its
 gameplan is approved and (if applicable) the worktree is spawned.
 
+**Default to the lazy-build discipline below.** The one exception: a task
+that's genuinely research/investigation-shaped, or one the user explicitly
+asked for full effort on with no shortcuts, skips this step entirely,
+thoroughness is the actual goal there, not a minimal diff. Everything else
+gets the discipline.
+
 **Check your own available skills first.** If `lazysenior` or `ponytail` is
 one of them, use it, either enforces the same discipline in more detail than
 this can. If neither is available, offer to install `ponytail` (a real

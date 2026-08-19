@@ -1,4 +1,4 @@
-# jso (john sang's orchestrator)
+# jso 
 
 a terminal-native all in one dev-workflow orchestrator agent. give it a ticket and it works
 through the proper steps itself, scoping, building, testing,

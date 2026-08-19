@@ -1,6 +1,6 @@
 ---
 name: jso
-description: All-in-one Claude orchestrator agent, terminal-native. Sizes every task first: small changes get built and pushed directly, big ones go through a bundled /scope pass before a git worktree + Ghostty split get spawned. Runs a detect-and-test pass with a gated debug subagent on failure, a tiered diff review (high-level/in-depth/minimal), and gated multi-template PR drafting/merge when the work is done.
+description: All-in-one Claude orchestrator agent, terminal-native. Sizes every task first, small changes get built and pushed directly, big ones go through a bundled /scope pass before a git worktree + Ghostty split get spawned. Runs a detect-and-test pass with a gated debug subagent on failure, a tiered diff review (high-level/in-depth/minimal), and gated multi-template PR drafting/merge when the work is done.
 ---
 
 # JSO (John Sang's Orchestrator)

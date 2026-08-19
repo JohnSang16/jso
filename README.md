@@ -1,11 +1,10 @@
 # jso (john sang's orchestrator)
 
-an all-in-one claude orchestrator agent, inspired by claude conductor, not a
-recreation of it. terminal-native: a claude code skill that notices when a
-task deserves its own git worktree and ghostty split, asks before spawning
-one, runs a gated test/debug loop, and shows a tiered diff review
-(high-level / in-depth / minimal) with merge/edit/discard when the work is
-done.
+a terminal-native orchestrator agent. give it a ticket and it works
+through the actual dev workflow itself, scoping, building, testing,
+debugging, and drafting the pr, gated so nothing real happens without your
+approval. it's built on a less-is-more design philosophy: minimal diffs,
+minimal token spend, while still covering every step a real workflow needs.
 
 ## architecture
 
@@ -31,16 +30,6 @@ flowchart TD
     P --> Q{push approved?}
     Q -->|yes| R[push branch, open pr]
 ```
-
-## a note on terminal support
-
-the worktree-per-task idea is terminal-agnostic, but the actual split
-mechanism today is not: it shells out to ghostty's own applescript
-dictionary (macos only, needs ghostty >= 1.3.0). there's no equivalent
-wired up for iterm2, kitty, windows terminal, or linux. tmux would be the
-natural fallback (still terminal-native, just without the native ghostty
-look), but that isn't built yet, this only runs on macos + ghostty right
-now.
 
 ## install
 

@@ -5,6 +5,8 @@ through the proper flow itself, scoping, building, testing,
 debugging, and drafting the pr, gated so nothing real happens without your
 approval. it's built on a less-is-more design philosophy: minimal diffs,
 minimal token spend, while still covering every step a real workflow needs.
+the one exception: a task that's genuinely research/investigation-shaped, or
+one you explicitly want full effort on, skips the lazy-build step entirely.
 
 ## architecture
 

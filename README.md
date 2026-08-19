@@ -1,7 +1,7 @@
 # jso (john sang's orchestrator)
 
-a terminal-native orchestrator agent. give it a ticket and it works
-through the actual dev workflow itself, scoping, building, testing,
+a terminal-native all in one dev-worflow orchestrator agent. give it a ticket and it works
+through the proper flow itself, scoping, building, testing,
 debugging, and drafting the pr, gated so nothing real happens without your
 approval. it's built on a less-is-more design philosophy: minimal diffs,
 minimal token spend, while still covering every step a real workflow needs.

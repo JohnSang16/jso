@@ -73,3 +73,11 @@ claude plugin update jso@jso-marketplace
 - `agents/jso-debugger.md` - `jso-debugger`. fixes a failing test root
   cause first, minimal diff, re-runs tests, reports back. never
   commits/merges/pushes, and only runs after an explicit yes.
+
+**optional external dependency**
+- [`ponytail`](https://github.com/DietrichGebert/ponytail) - a public
+  plugin the orchestrator checks for before building. if installed, it
+  enforces the lazy-build discipline (shortest correct diff, reuse before
+  writing anything new, no speculative abstractions) in more detail than
+  jso's own bundled baseline. if it's missing, jso offers to install it
+  (asks first), or falls back to the baseline itself.

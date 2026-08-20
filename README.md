@@ -7,7 +7,7 @@ approval. it's built on a less-is-more design philosophy: minimal diffs,
 minimal token spend, while still covering every step a real workflow needs.
 
 the one exception: a task that's genuinely research/investigation-shaped, or
-one you explicitly want full effort on, skips the lazy-build step entirely.
+one you explicitly want full effort on, skips the minimal-effort approach entirely.
 
 ## architecture
 
